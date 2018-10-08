@@ -18,14 +18,13 @@
 #define VI_MAJOR					1
 #define VI_MINOR					0
 #define VI_REVISION					0
-#define VI_BUILD					11				
+#define VI_BUILD					11
 #define VI_PROGRAM_NAME_CN			"¿ìÂë¼Ó±à"
 #define VI_PROGRAM_NAME_EN			"j8editor"
 
 HWND hDialog, hEditor, hFrame;
 static const TCHAR cFrameName[9] = VI_PROGRAM_NAME_EN;
-static TCHAR cFilePath[MAX_PATH] = "";
-static TCHAR cLoadString[50], cSearchString[50], cReplaceString[50];
+static TCHAR cFilePath[MAX_PATH], cLoadString[MAX_PATH], cSearchString[50], cReplaceString[50];
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 void toClickMenuItem(HWND hWnd, WORD wId);
@@ -38,7 +37,7 @@ void toSelectMenuItem();
 void toCreateEditor(HWND hParent);
 void toCreateFrame(HINSTANCE hInstance);
 void toResizeEdit();
-void toSetFrameEditorMenu();
+void toSetFrameTitle();
 
 /* File */
 BOOL toConfirmFileExist();

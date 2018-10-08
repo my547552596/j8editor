@@ -1,9 +1,13 @@
 #include "j8editor.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR sCmdLine, int iCmdShow) {
-    strcpy(cFilePath, sCmdLine);
     toCreateFrame(hInstance);
-    toReadFile();
+
+    if(toConfirmFileExist(sCmdLine)) {
+        toReadFile();
+    } else {
+        toCreateFile();
+    }
 
     MSG msg;
     ZeroMemory(&msg, sizeof(msg));
@@ -135,8 +139,8 @@ void toCopyCutPasteSelectallUndo(UINT uMsg) {
     SendMessage(hEditor, uMsg, 0, -1);
 }
 
-BOOL toConfirmFileExist() {
-    DWORD dAttr = GetFileAttributes(cFilePath);
+BOOL toConfirmFileExist(char *cPath) {
+    DWORD dAttr = GetFileAttributes(cPath);
 
     if(dAttr == INVALID_FILE_ATTRIBUTES) {
         return FALSE;
@@ -146,6 +150,7 @@ BOOL toConfirmFileExist() {
         return FALSE;
     }
 
+    strcpy(cFilePath, cPath);
     return TRUE;
 }
 
@@ -187,8 +192,10 @@ void toCreateEditor(HWND hParent) {
 
 void toCreateFile() {
     SetWindowText(hEditor, "");
+    SendMessage(hEditor, EM_SETREADONLY, FALSE, 0);
     LoadString(GetModuleHandle(NULL), IDS_FILE_NEW, cFilePath, sizeof(cFilePath));
-    toSetFrameEditorMenu();
+    CheckMenuItem(GetMenu(hFrame), 205, MF_BYCOMMAND | MF_UNCHECKED);
+    toSetFrameTitle();
 }
 
 void toCreateFrame(HINSTANCE hInstance) {
@@ -245,9 +252,12 @@ BOOL toDrawText(BOOL bCalc, HDC hDC, TCHAR* cFileBuffer) {
 }
 
 void toDropFiles(HWND hWnd, HDROP hDropInfo) {
-    DragQueryFile(hDropInfo, 0, cFilePath, sizeof(cFilePath));
-    toReadFile();
+    DragQueryFile(hDropInfo, 0, cLoadString, sizeof(cLoadString));
     DragFinish(hDropInfo);
+
+    if(toConfirmFileExist(cLoadString)) {
+        toReadFile();
+    }
 }
 
 void toGetFileReadonly() {
@@ -346,32 +356,26 @@ void toPrintFile() {
 }
 
 void toReadFile() {
-    if(strlen(cFilePath)) {
-        if(toConfirmFileExist()) {
-            HANDLE hFile = CreateFile(cFilePath,
-                                      GENERIC_READ,
-                                      FILE_SHARE_READ,
-                                      NULL,
-                                      OPEN_EXISTING,
-                                      FILE_ATTRIBUTE_NORMAL,
-                                      NULL
-                                     );
+    HANDLE hFile = CreateFile(cFilePath,
+                              GENERIC_READ,
+                              FILE_SHARE_READ,
+                              NULL,
+                              OPEN_EXISTING,
+                              FILE_ATTRIBUTE_NORMAL,
+                              NULL
+                             );
 
-            DWORD dReadSize = GetFileSize(hFile, NULL);
-            TCHAR cFileBuffer[dReadSize];
-            if(dReadSize > 0) {
-                ReadFile(hFile, cFileBuffer, sizeof(cFileBuffer), &dReadSize, NULL);
-                cFileBuffer[dReadSize] = 0;
-                SetWindowText(hEditor, cFileBuffer);
-            }
-
-            CloseHandle(hFile);
-            toGetFileReadonly();
-            toSetFrameEditorMenu();
-        }
-    } else {
-        toCreateFile();
+    DWORD dReadSize = GetFileSize(hFile, NULL);
+    TCHAR cFileBuffer[dReadSize];
+    if(dReadSize > 0) {
+        ReadFile(hFile, cFileBuffer, sizeof(cFileBuffer), &dReadSize, NULL);
+        cFileBuffer[dReadSize] = 0;
+        SetWindowText(hEditor, cFileBuffer);
     }
+
+    CloseHandle(hFile);
+    toGetFileReadonly();
+    toSetFrameTitle();
 }
 
 void toResizeEdit() {
@@ -414,7 +418,7 @@ void toSelectMenuItem() {
     }
 }
 
-void toSetFrameEditorMenu() {
+void toSetFrameTitle() {
     TCHAR cFrameTitle[MAX_PATH];
     strcpy(cFrameTitle, cFilePath);
     strcat(cFrameTitle, " - ");
@@ -423,7 +427,7 @@ void toSetFrameEditorMenu() {
 }
 
 void toSetFileReadonly() {
-    if(toConfirmFileExist()) {
+    if(toConfirmFileExist(cFilePath)) {
         DWORD dResult = GetFileAttributes(cFilePath);
         HMENU hMenu = GetMenu(hFrame);
 

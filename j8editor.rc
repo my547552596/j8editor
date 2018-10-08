@@ -8,14 +8,14 @@ BEGIN
 	BEGIN
 		BLOCK "080404b0"
 		BEGIN
-			VALUE	"Comments",			"MinGW compilation"
-			VALUE	"CompanyName",		"mayer"
-			VALUE	"FileDescription",	"it is free"
+			VALUE	"Comments",			"MinGW compilation\0"
+			VALUE	"CompanyName",		"mayer\0"
+			VALUE	"FileDescription",	VI_PROGRAM_NAME_CN
 			VALUE	"FileVersion",		VERSION_INFO
-			VALUE	"LegalCopyright",	VI_COPYRIGHT
+			VALUE	"LegalCopyright",	"mayer@2018.9.30\0"
 			VALUE	"LegalTrademarks",	"chi"
 			VALUE	"InternalName",		VI_PROGRAM_NAME_EN
-			VALUE	"OriginalFilename",	"j8editor.exe"
+			VALUE	"OriginalFilename",	"j8editor.exe\0"
 			VALUE	"ProductName",		VI_PROGRAM_NAME_CN
 			VALUE	"ProductVersion",	VERSION_INFO
 		END
@@ -104,6 +104,6 @@ END
 STRINGTABLE DISCARDABLE
 BEGIN
     IDS_FILE_FILTER	"文本文件 (*.txt)\0*.txt\0所有文件 (*.*)\0*.*\0"
-    IDS_FILE_NEW	"未命名文件"
-	IDS_HELP_ABOUT	"关于"
+    IDS_FILE_NEW	"未命名文件\0"
+	IDS_ABOUT_TEXT	"造吧作品，C语言 MinGW64 编译的纯文本编辑器。\0"
 END

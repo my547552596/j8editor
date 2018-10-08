@@ -7,9 +7,10 @@
 #define	TEXT_REPLACE				SW_SHOW
 
 #define	IDR_MAINFRAME				128
-#define	IDS_FILE_FILTER				400
-#define	IDS_FILE_NEW				401
-#define IDS_HELP_ABOUT				415
+#define	IDS_FILE_FILTER				1001
+#define	IDS_FILE_NEW				1002
+#define IDS_ABOUT_TITLE				"关于"
+#define IDS_ABOUT_TEXT				1976
 
 #define MAKE_STRING(N)				#N
 #define MAKE_VERSION(A, B, C, D)	MAKE_STRING(A.B.C.D)
@@ -17,8 +18,7 @@
 #define VI_MAJOR					1
 #define VI_MINOR					0
 #define VI_REVISION					0
-#define VI_BUILD					11
-#define VI_COPYRIGHT				"mayer@2018.9.30"
+#define VI_BUILD					11				
 #define VI_PROGRAM_NAME_CN			"快码加编"
 #define VI_PROGRAM_NAME_EN			"j8editor"
 
@@ -41,7 +41,8 @@ void toResizeEdit();
 void toSetFrameEditorMenu();
 
 /* File */
-void toCreateFile();
+void toCreateFile(char *cPath);
+void toDropFiles(HWND hWnd, HDROP hDropInfo);
 void toGetFileReadonly();
 void toOpenOrSaveAsFile(BOOL iOS);
 void toPrintFile();
@@ -57,7 +58,7 @@ void toCopyCutPasteSelectallUndo(UINT uMsg);
 /* Tool */
 void toGetTextAndLineCount();
 
-LRESULT CALLBACK searchProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK indexProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 void toCreateDialog(HWND hParent);
 void toReplaceText();
 BOOL toSearchOrCancel(HWND hWnd, WORD wId);

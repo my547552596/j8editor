@@ -1,0 +1,109 @@
+#include "j8editor.h"
+
+1 VERSIONINFO
+FILEVERSION		VI_MAJOR,VI_MINOR,VI_REVISION,VI_BUILD
+PRODUCTVERSION	VI_MAJOR,VI_MINOR,VI_REVISION,VI_BUILD
+BEGIN
+	BLOCK "StringFileInfo"
+	BEGIN
+		BLOCK "080404b0"
+		BEGIN
+			VALUE	"Comments",			"MinGW compilation"
+			VALUE	"CompanyName",		"mayer"
+			VALUE	"FileDescription",	"it is free"
+			VALUE	"FileVersion",		VERSION_INFO
+			VALUE	"LegalCopyright",	VI_COPYRIGHT
+			VALUE	"LegalTrademarks",	"chi"
+			VALUE	"InternalName",		VI_PROGRAM_NAME_EN
+			VALUE	"OriginalFilename",	"j8editor.exe"
+			VALUE	"ProductName",		VI_PROGRAM_NAME_CN
+			VALUE	"ProductVersion",	VERSION_INFO
+		END
+	END
+	BLOCK "VarFileInfo"
+	BEGIN
+		VALUE "Translation", 0x804, 0x4b0
+	END
+END
+
+IDR_MAINFRAME ICON "../chi/jobar.ico"
+
+200 MENU
+BEGIN
+	POPUP "文件(&F)"
+	BEGIN
+		MENUITEM	"新建(&N)\tCtrl+N",			201
+		MENUITEM	"打开(&O)\tCtrl+O",			202
+		MENUITEM	"保存(&S)\tCtrl+S",			203
+		MENUITEM	"另存为(&A)\tCtrl+Alt+S",	204
+		MENUITEM	SEPARATOR
+		MENUITEM	"只读(&R)",					205
+		MENUITEM	"打印(&P)\tCtrl+P",			206
+		MENUITEM	SEPARATOR
+		MENUITEM	"退出(&X)\tAlt+F4",			299
+	END
+	POPUP "编辑(&E)"
+	BEGIN
+		MENUITEM	"撤销(&Z)\tCtrl+Z",			210
+		MENUITEM	SEPARATOR
+		MENUITEM	"剪切(&T)\tCtrl+X",			211
+		MENUITEM	"复制(&C)\tCtrl+C",			212
+		MENUITEM	"粘贴(&P)\tCtrl+V",			213
+		MENUITEM	SEPARATOR
+		MENUITEM	"全选(&A)\tCtrl+A",			214
+	END
+	POPUP "索引(&I)"
+	BEGIN
+		MENUITEM	"查找(&S)\tCtrl+F",			220
+		MENUITEM	"查找下一个(&N)\tF3",		221
+		MENUITEM	SEPARATOR
+		MENUITEM	"替换(&R)\tCtrl+H",			222
+	END
+	POPUP "工具(&T)"
+	BEGIN
+		MENUITEM	"统计(&C)",					230
+	END
+	POPUP "帮助(&H)"
+	BEGIN
+		MENUITEM	"源代码(&G)",				240
+		MENUITEM	SEPARATOR
+		MENUITEM	"关于(&A)\tF1",				249
+	END
+END
+
+300 ACCELERATORS
+BEGIN
+	"N",	301,	VIRTKEY, CONTROL
+	"O",	302,	VIRTKEY, CONTROL
+	"S",	303,	VIRTKEY, CONTROL
+	"S",	304,	VIRTKEY, CONTROL, ALT
+	"P",	306,	VIRTKEY, CONTROL
+	"Z",	310,	VIRTKEY, CONTROL
+	"X",	311,	VIRTKEY, CONTROL
+	"C",	312,	VIRTKEY, CONTROL
+	"V",	313,	VIRTKEY, CONTROL
+	"A",	314,	VIRTKEY, CONTROL
+	"F",	320,	VIRTKEY, CONTROL
+	VK_F3,	321,	VIRTKEY
+	"H",	322,	VIRTKEY, CONTROL
+	VK_F1,	349,	VIRTKEY
+	VK_F4,	399,	VIRTKEY, ALT
+END
+
+400 DIALOG DISCARDABLE 0, 0, 165, 39
+STYLE DS_MODALFRAME | WS_CAPTION | WS_POPUP | WS_SYSMENU
+CAPTION	"检索"
+FONT 10, "Courier New"
+BEGIN
+    EDITTEXT				401,	5,		6,	100,	10,	ES_AUTOHSCROLL
+	PUSHBUTTON	"查找(&F)", 402,	110,	5,	50,		12
+    EDITTEXT				403,	5,		23,	100,	10,	ES_AUTOHSCROLL
+    PUSHBUTTON	"替换(&H)",	404,	110,	22,	50,		12
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_FILE_FILTER	"文本文件 (*.txt)\0*.txt\0所有文件 (*.*)\0*.*\0"
+    IDS_FILE_NEW	"未命名文件"
+	IDS_HELP_ABOUT	"关于"
+END

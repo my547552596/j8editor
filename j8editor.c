@@ -373,9 +373,9 @@ void toReadFile() {
         SetWindowText(hEditor, cFileBuffer);
     }
 
-    CloseHandle(hFile);
     toGetFileReadonly();
     toSetFrameTitle();
+    CloseHandle(hFile);
 }
 
 void toResizeEdit() {

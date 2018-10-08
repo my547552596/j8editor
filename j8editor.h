@@ -41,7 +41,8 @@ void toResizeEdit();
 void toSetFrameEditorMenu();
 
 /* File */
-void toCreateFile(char *cPath);
+BOOL toConfirmFileExist();
+void toCreateFile();
 void toDropFiles(HWND hWnd, HDROP hDropInfo);
 void toGetFileReadonly();
 void toOpenOrSaveAsFile(BOOL iOS);

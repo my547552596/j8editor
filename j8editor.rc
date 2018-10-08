@@ -10,7 +10,7 @@ BEGIN
 		BEGIN
 			VALUE	"Comments",			"MinGW compilation\0"
 			VALUE	"CompanyName",		"mayer\0"
-			VALUE	"FileDescription",	VI_PROGRAM_NAME_CN
+			VALUE	"FileDescription",	VI_PROGRAM_NAME_EN
 			VALUE	"FileVersion",		VERSION_INFO
 			VALUE	"LegalCopyright",	"mayer@2018.9.30\0"
 			VALUE	"LegalTrademarks",	"chi"

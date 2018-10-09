@@ -42,8 +42,8 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		toCreateNotifyIconData(hWnd);
         break;
     case WM_DESTROY:
-		Shell_NotifyIcon(NIM_DELETE, &nid);
-        PostQuitMessage(0);
+        toSetNotifyIconData();
+		PostQuitMessage(0);
         break;
     case WM_DROPFILES:
         toDropFiles(hWnd, (HDROP)wParam);
@@ -56,20 +56,19 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
         break;
     case WM_SIZE:
 		if(wParam == SIZE_MINIMIZED) {
-			ShowWindow(hFrame, SW_HIDE);
+			toSetNotifyIconData();
 		} else {
 			toResizeEdit();
 		}
         break;
 	case WM_USER:
 		if(lParam == WM_LBUTTONDOWN) {
-			ShowWindow(hFrame, SW_SHOWNORMAL);
-			SetWindowPos(hFrame, HWND_TOPMOST, 0, 0, 0, 0, SWP_DRAWFRAME | SWP_NOMOVE | SWP_NOSIZE);
+			toSetNotifyIconData();
 		}
         break;
 	default:
 		if(message == WM_TASKBARCREATED) {
-			toCreateNotifyIconData(hWnd);
+			toSetNotifyIconData();
 		}
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
@@ -136,6 +135,14 @@ void toClickMenuItem(HWND hWnd, WORD wId) {
         break;
     case 230:
         toGetTextAndLineCount();
+        break;
+    case 231:
+    case 331:
+        toShiftSel(WORD_UPPER);
+        break;
+    case 232:
+    case 332:
+        toShiftSel(WORD_LOWER);
         break;
     case 240:
         Atwo(hWnd, 25, 2);
@@ -258,8 +265,6 @@ void toCreateNotifyIconData(HWND hWnd) {
 	nid.uCallbackMessage = WM_USER;
 	nid.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
 	nid.uID = 0;
-	strcpy(nid.szTip, VI_PROGRAM_NAME_CN);
-	Shell_NotifyIcon(NIM_ADD, &nid);
 }
 
 BOOL toDrawText(BOOL bCalc, HDC hDC, TCHAR* cFileBuffer) {
@@ -303,9 +308,9 @@ void toGetFileReadonly() {
 
 void toGetTextAndLineCount() {
     char cAllCount[50] = "字数：";
-    strcat(cAllCount, toGetStrFromInt(GetWindowTextLength(hEditor)));
+    strcat(cAllCount, toGetStringFromInteger(GetWindowTextLength(hEditor)));
     strcat(cAllCount, "\n行数：");
-    strcat(cAllCount, toGetStrFromInt(SendMessage(hEditor, EM_GETLINECOUNT, 0, 0)));
+    strcat(cAllCount, toGetStringFromInteger(SendMessage(hEditor, EM_GETLINECOUNT, 0, 0)));
     toHelp("统计", cAllCount);
 }
 
@@ -471,6 +476,28 @@ void toSetFileReadonly() {
     }
 }
 
+void toSetNotifyIconData() {
+	if(IsWindowVisible(hFrame)) {
+		ShowWindow(hFrame, SW_HIDE);
+		strcpy(nid.szTip, toGetFileName(cFilePath));
+		Shell_NotifyIcon(NIM_ADD, &nid);
+	} else {
+		ShowWindow(hFrame, SW_SHOWNORMAL);
+		Shell_NotifyIcon(NIM_DELETE, &nid);
+	}
+}
+
+void toShiftSel(BOOL bLU) {
+	DWORD dBegin, dEnd, dTextLength = GetWindowTextLength(hEditor) + 1;
+    TCHAR cEditBuffer[dTextLength];
+    GetWindowText(hEditor, cEditBuffer, sizeof(cEditBuffer) / sizeof(TCHAR));
+	SendMessage(hEditor, EM_GETSEL, (WPARAM) &dBegin, (LPARAM) &dEnd);
+	TCHAR cStringBuffer[dEnd - dBegin + 1];
+	strncpy(cStringBuffer, cEditBuffer + dBegin, dEnd - dBegin);
+	TCHAR *cStringUpper = bLU ? strupr(cStringBuffer) : strlwr(cStringBuffer);
+	SendMessage(hEditor, EM_REPLACESEL, TRUE, (LPARAM) cStringUpper);
+}
+
 void toWriteFile() {
     HANDLE hFile = CreateFile(cFilePath,
                               GENERIC_WRITE,
@@ -545,7 +572,7 @@ int toSearchText() {
         GetWindowText(hEditor, cEditText, iEnd / sizeof(TCHAR));
 
         SendMessage(hEditor, EM_GETSEL, 0, (LPARAM) &iEnd);
-        iBegin = toGetIndex(cEditText + iEnd, (char *) &cSearchString);
+        iBegin = toGetIndexOfString(cEditText + iEnd, (char *) &cSearchString);
 
         if(iBegin < 0) {
             SendMessage(hEditor, EM_SETSEL, 0, 0);

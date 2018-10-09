@@ -5,6 +5,8 @@
 #define	FILE_WRITE					1
 #define	TEXT_SEARCH					SW_HIDE
 #define	TEXT_REPLACE				SW_SHOW
+#define	WORD_LOWER					0
+#define	WORD_UPPER					1
 
 #define	IDI_MAINFRAME				128
 #define	IDS_FILE_FILTER				1001
@@ -41,9 +43,10 @@ void toCreateFrame(HINSTANCE hInstance);
 void toCreateNotifyIconData(HWND hWnd);
 void toResizeEdit();
 void toSetFrameTitle();
+void toSetNotifyIconData();
 
 /* File */
-BOOL toConfirmFileExist();
+BOOL toConfirmFileExist(char *cPath);
 void toCreateFile();
 void toDropFiles(HWND hWnd, HDROP hDropInfo);
 void toGetFileReadonly();
@@ -54,12 +57,11 @@ void toSaveFile();
 void toSetFileReadonly();
 void toWriteFile();
 
-/* Edit */
+/* Edit & Index & Tool */
 void toClear();
 void toCopyCutPasteSelectallUndo(UINT uMsg);
-
-/* Index & Tool */
 void toGetTextAndLineCount();
+void toShiftSel(BOOL bLU);
 
 LRESULT CALLBACK indexProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 void toCreateDialog(HWND hParent);

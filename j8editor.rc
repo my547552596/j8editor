@@ -65,6 +65,8 @@ BEGIN
 		MENUITEM	SEPARATOR
 		MENUITEM	"英文大写(&U)\tCtrl+U",		231
 		MENUITEM	"英文小写(&L)\tCtrl+L",		232
+		MENUITEM	SEPARATOR
+		MENUITEM	"测试(&T)",					239
 	END
 	POPUP "帮助(&H)"
 	BEGIN

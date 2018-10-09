@@ -1,6 +1,7 @@
 #include "j8editor.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR sCmdLine, int iCmdShow) {
+	hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MAINFRAME));
     toCreateFrame(hInstance);
 
     if(toConfirmFileExist(sCmdLine)) {
@@ -27,6 +28,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR sCmdLine, 
 }
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
+	UINT WM_TASKBARCREATED = RegisterWindowMessage("TaskbarCreated");
     switch(message)	{
     case WM_CLOSE:
         DestroyWindow(hWnd);
@@ -37,8 +39,10 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
     case WM_CREATE:
         toCreateDialog(hWnd);
         toCreateEditor(hWnd);
+		toCreateNotifyIconData(hWnd);
         break;
     case WM_DESTROY:
+		Shell_NotifyIcon(NIM_DELETE, &nid);
         PostQuitMessage(0);
         break;
     case WM_DROPFILES:
@@ -51,9 +55,22 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
         SetFocus(hEditor);
         break;
     case WM_SIZE:
-        toResizeEdit();
+		if(wParam == SIZE_MINIMIZED) {
+			ShowWindow(hFrame, SW_HIDE);
+		} else {
+			toResizeEdit();
+		}
         break;
-    default:
+	case WM_USER:
+		if(lParam == WM_LBUTTONDOWN) {
+			ShowWindow(hFrame, SW_SHOWNORMAL);
+			SetWindowPos(hFrame, HWND_TOPMOST, 0, 0, 0, 0, SWP_DRAWFRAME | SWP_NOMOVE | SWP_NOSIZE);
+		}
+        break;
+	default:
+		if(message == WM_TASKBARCREATED) {
+			toCreateNotifyIconData(hWnd);
+		}
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
 
@@ -204,9 +221,9 @@ void toCreateFrame(HINSTANCE hInstance) {
     wc.lpfnWndProc = WinProc;
     wc.cbClsExtra = 0;
     wc.cbWndExtra = 0;
-    wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+    wc.hbrBackground = (HBRUSH)GetStockObject(NULL_BRUSH);
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-    wc.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDR_MAINFRAME));
+    wc.hIcon = hIcon;
     wc.hInstance = hInstance;
     wc.lpszClassName = cFrameName;
     wc.lpszMenuName = MAKEINTRESOURCE(200);
@@ -232,6 +249,17 @@ void toCreateFrame(HINSTANCE hInstance) {
 
     ShowWindow(hFrame, SW_SHOW);
     UpdateWindow(hFrame);
+}
+
+void toCreateNotifyIconData(HWND hWnd) {
+	nid.cbSize = sizeof(nid);
+	nid.hIcon = hIcon;
+	nid.hWnd = hWnd;
+	nid.uCallbackMessage = WM_USER;
+	nid.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
+	nid.uID = 0;
+	strcpy(nid.szTip, VI_PROGRAM_NAME_CN);
+	Shell_NotifyIcon(NIM_ADD, &nid);
 }
 
 BOOL toDrawText(BOOL bCalc, HDC hDC, TCHAR* cFileBuffer) {

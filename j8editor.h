@@ -6,7 +6,7 @@
 #define	TEXT_SEARCH					SW_HIDE
 #define	TEXT_REPLACE				SW_SHOW
 
-#define	IDR_MAINFRAME				128
+#define	IDI_MAINFRAME				128
 #define	IDS_FILE_FILTER				1001
 #define	IDS_FILE_NEW				1002
 #define IDS_ABOUT_TITLE				"关于"
@@ -18,11 +18,13 @@
 #define VI_MAJOR					1
 #define VI_MINOR					0
 #define VI_REVISION					0
-#define VI_BUILD					11
+#define VI_BUILD					13
 #define VI_PROGRAM_NAME_CN			"快码加编"
 #define VI_PROGRAM_NAME_EN			"j8editor"
 
+HICON hIcon;
 HWND hDialog, hEditor, hFrame;
+NOTIFYICONDATA nid;
 static const TCHAR cFrameName[9] = VI_PROGRAM_NAME_EN;
 static TCHAR cFilePath[MAX_PATH], cLoadString[MAX_PATH], cSearchString[50], cReplaceString[50];
 
@@ -36,6 +38,7 @@ void toSelectMenuItem();
 /* Layout */
 void toCreateEditor(HWND hParent);
 void toCreateFrame(HINSTANCE hInstance);
+void toCreateNotifyIconData(HWND hWnd);
 void toResizeEdit();
 void toSetFrameTitle();
 
@@ -55,7 +58,7 @@ void toWriteFile();
 void toClear();
 void toCopyCutPasteSelectallUndo(UINT uMsg);
 
-/* Tool */
+/* Index & Tool */
 void toGetTextAndLineCount();
 
 LRESULT CALLBACK indexProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);

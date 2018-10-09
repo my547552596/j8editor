@@ -20,7 +20,7 @@
 #define VI_MAJOR					1
 #define VI_MINOR					0
 #define VI_REVISION					0
-#define VI_BUILD					13
+#define VI_BUILD					14
 #define VI_PROGRAM_NAME_CN			"¿ìÂë¼Ó±à"
 #define VI_PROGRAM_NAME_EN			"j8editor"
 

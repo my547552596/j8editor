@@ -191,6 +191,28 @@ BOOL toConfirmFileExist(char *cPath) {
     return TRUE;
 }
 
+int toConvertAnsiFromUtf8(char *cUtf8, char *cAnsi) {
+    int iLength = MultiByteToWideChar(CP_UTF8, 0, cUtf8, -1, NULL, 0);
+    wchar_t wcUnicode[iLength];
+    MultiByteToWideChar(CP_UTF8, 0, cUtf8, -1, wcUnicode, iLength);
+    iLength = WideCharToMultiByte(CP_ACP, 0, wcUnicode, -1, NULL, 0, NULL, NULL);
+
+    if(sizeof(cAnsi)) {
+        WideCharToMultiByte(CP_ACP, 0, wcUnicode, -1, cAnsi, iLength, NULL, NULL);
+        return 0;
+    }
+
+    return iLength + 1;
+}
+
+int toCountCharacter(char *cString) {
+    int iLength = MultiByteToWideChar(CP_ACP, 0, cString, -1, NULL, 0);
+    wchar_t wcUnicode[iLength];
+    MultiByteToWideChar(CP_ACP, 0, cString, -1, wcUnicode, iLength);
+
+    return wcslen(wcUnicode);
+}
+
 void toCreateEditor(HWND hParent) {
     RECT rect;
     GetClientRect(hParent, &rect);
@@ -320,11 +342,13 @@ void toGetFileReadonly() {
 }
 
 void toGetTextAndLineCount() {
-    char cAllCount[50] = "×ÖÊý£º";
-    strcat(cAllCount, toGetStringFromInteger(GetWindowTextLength(hEditor)));
-    strcat(cAllCount, "\nÐÐÊý£º");
+    char cAllCount[50] = "å­—æ•°ï¼š";
+    TCHAR cEditText[GetWindowTextLength(hEditor) + 1];
+    GetWindowText(hEditor, cEditText, sizeof(cEditText) / sizeof(TCHAR));
+    strcat(cAllCount, toGetStringFromInteger(toCountCharacter(cEditText)));
+    strcat(cAllCount, "\nè¡Œæ•°ï¼š");
     strcat(cAllCount, toGetStringFromInteger(SendMessage(hEditor, EM_GETLINECOUNT, 0, 0)));
-    toHelp("Í³¼Æ", cAllCount);
+    toHelp("ç»Ÿè®¡", cAllCount);
 }
 
 void toHelp(TCHAR *cTitle, TCHAR *cText) {
@@ -413,10 +437,17 @@ void toReadFile() {
 
     DWORD dReadSize = GetFileSize(hFile, NULL);
     TCHAR cFileBuffer[dReadSize];
+
     if(dReadSize > 0) {
         ReadFile(hFile, cFileBuffer, sizeof(cFileBuffer), &dReadSize, NULL);
-        cFileBuffer[dReadSize] = 0;
-        SetWindowText(hEditor, cFileBuffer);
+        if(cFileBuffer[0] == (char)0xEF && cFileBuffer[1] == (char)0xBB && cFileBuffer[2] == (char)0xBF) {
+            TCHAR cTextBuffer[toConvertAnsiFromUtf8(cFileBuffer, NULL)];
+            toConvertAnsiFromUtf8(cFileBuffer + 3, cTextBuffer);
+            SetWindowText(hEditor, cTextBuffer);
+        } else {
+            SetWindowText(hEditor, cFileBuffer);
+
+        }
     }
 
     toGetFileReadonly();

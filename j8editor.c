@@ -191,20 +191,6 @@ BOOL toConfirmFileExist(char *cPath) {
     return TRUE;
 }
 
-int toConvertAnsiFromUtf8(char *cUtf8, char *cAnsi) {
-    int iLength = MultiByteToWideChar(CP_UTF8, 0, cUtf8, -1, NULL, 0);
-    wchar_t wcUnicode[iLength];
-    MultiByteToWideChar(CP_UTF8, 0, cUtf8, -1, wcUnicode, iLength);
-    iLength = WideCharToMultiByte(CP_ACP, 0, wcUnicode, -1, NULL, 0, NULL, NULL);
-
-    if(sizeof(cAnsi)) {
-        WideCharToMultiByte(CP_ACP, 0, wcUnicode, -1, cAnsi, iLength, NULL, NULL);
-        return 0;
-    }
-
-    return iLength + 1;
-}
-
 int toCountCharacter(char *cString) {
     int iLength = MultiByteToWideChar(CP_ACP, 0, cString, -1, NULL, 0);
     wchar_t wcUnicode[iLength];
@@ -440,14 +426,33 @@ void toReadFile() {
 
     if(dReadSize > 0) {
         ReadFile(hFile, cFileBuffer, sizeof(cFileBuffer), &dReadSize, NULL);
-        if(cFileBuffer[0] == (char)0xEF && cFileBuffer[1] == (char)0xBB && cFileBuffer[2] == (char)0xBF) {
-            TCHAR cTextBuffer[toConvertAnsiFromUtf8(cFileBuffer, NULL)];
-            toConvertAnsiFromUtf8(cFileBuffer + 3, cTextBuffer);
+        if(cFileBuffer[0] == (char) 0xEF && cFileBuffer[1] == (char) 0xBB && cFileBuffer[2] == (char) 0xBF) {
+			dReadSize = MultiByteToWideChar(CP_UTF8, 0, cFileBuffer + 3, -1, NULL, 0);
+			wchar_t wcUnicode[dReadSize];
+			MultiByteToWideChar(CP_UTF8, 0, cFileBuffer + 3, -1, wcUnicode, dReadSize);
+			dReadSize = WideCharToMultiByte(CP_ACP, 0, wcUnicode, -1, NULL, 0, NULL, NULL);
+            TCHAR cTextBuffer[dReadSize];
+			WideCharToMultiByte(CP_ACP, 0, wcUnicode, -1, cTextBuffer, dReadSize, NULL, NULL);
             SetWindowText(hEditor, cTextBuffer);
+        } else if(cFileBuffer[0] == (char) 0xFF && cFileBuffer[1] == (char) 0xFE) {
+			dReadSize = WideCharToMultiByte(CP_ACP, 0, (wchar_t *) cFileBuffer + 1, -1, NULL, 0, NULL, NULL);
+			TCHAR cTextBuffer[dReadSize + 1];
+			WideCharToMultiByte(CP_ACP, 0, (wchar_t *) cFileBuffer + 1, -1, cTextBuffer, dReadSize, NULL, NULL);
+			cTextBuffer[dReadSize] = 0;
+			SetWindowText(hEditor, cTextBuffer);
+        } else if(cFileBuffer[0] == (char) 0xFE && cFileBuffer[1] == (char) 0xFF) {
+			wchar_t wcBuffer[dReadSize / 2];
+			for(int i = 0; i < wcslen(wcBuffer) + 1; i++) {
+				wcBuffer[i] = cFileBuffer[(i + 1) * 2] * 256 + cFileBuffer[(i + 1) * 2 + 1];
+			}
+			dReadSize = WideCharToMultiByte(CP_ACP, 0, wcBuffer, -1, NULL, 0, NULL, NULL);
+			TCHAR cTextBuffer[dReadSize + 1];
+			WideCharToMultiByte(CP_ACP, 0, wcBuffer, -1, cTextBuffer, dReadSize, NULL, NULL);
+			cTextBuffer[dReadSize] = 0;
+			SetWindowText(hEditor, cTextBuffer);
         } else {
-            SetWindowText(hEditor, cFileBuffer);
-
-        }
+			SetWindowText(hEditor, cFileBuffer);
+		}
     }
 
     toGetFileReadonly();

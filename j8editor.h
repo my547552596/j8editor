@@ -7,7 +7,7 @@
 #define VI_MAJOR					1
 #define VI_MINOR					0
 #define VI_REVISION					0
-#define VI_BUILD					15
+#define VI_BUILD					16
 #define VI_PROGRAM_NAME_CN			"¿ìÂë¼Ó±à"
 #define VI_PROGRAM_NAME_EN			"j8editor"
 
@@ -65,7 +65,6 @@ void toSetFileReadonly();
 void toWriteFile();
 
 /* Edit & Index & Tool */
-int toConvertAnsiFromUtf8(char *cUtf8, char *cAnsi);
 void toCopyCutPasteSelectallUndo(UINT uMsg);
 int toCountCharacter(char *cString);
 void toGetTextAndLineCount();

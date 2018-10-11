@@ -7,7 +7,7 @@
 #define VI_MAJOR					1
 #define VI_MINOR					0
 #define VI_REVISION					0
-#define VI_BUILD					18
+#define VI_BUILD					19
 #define VI_PROGRAM_NAME_CN			"¿ìÂë¼Ó±à"
 #define VI_PROGRAM_NAME_EN			"j8editor"
 
@@ -33,7 +33,7 @@
 #define WM_TASKBAR_CREATED			RegisterWindowMessage(TEXT("TaskbarCreated"))
 
 HICON hIcon;
-HWND hDialog, hEditor, hFrame;
+HWND hDialogGoto, hDialogSearch, hEditor, hFrame;
 NOTIFYICONDATA nid;
 static const TCHAR cFrameName[9] = VI_PROGRAM_NAME_EN;
 static TCHAR cFilePath[MAX_PATH], cLoadString[MAX_PATH], cSearchString[50], cReplaceString[50];
@@ -82,7 +82,9 @@ void toShiftSel(BOOL bUL);
 
 LRESULT CALLBACK indexProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 void toCreateDialog(HWND hParent);
+void toGetLine(int iNumber);
 void toReplaceText();
 BOOL toSearchOrCancel(HWND hWnd, WORD wId);
 int toSearchText();
-void toShowDialog(int iSOR);
+void toShowDialogGoto();
+void toShowDialogSearch(int iSOR);

@@ -32,49 +32,51 @@ IDI_MAINFRAME ICON "../chi/jobar.ico"
 BEGIN
 	POPUP "文件(&F)"
 	BEGIN
-		MENUITEM	"新建(&N)\tCtrl+N",			201
-		MENUITEM	"打开(&O)\tCtrl+O",			202
-		MENUITEM	"保存(&S)\tCtrl+S",			203
-		MENUITEM	"另存为(&A)\tCtrl+Alt+S",	204
+		MENUITEM	"新建(&N)\tCtrl+N",					201
+		MENUITEM	"打开(&O)\tCtrl+O",					202
+		MENUITEM	"保存(&S)\tCtrl+S",					203
+		MENUITEM	"另存为(&A)\tCtrl+Alt+S",			204
 		MENUITEM	SEPARATOR
-		MENUITEM	"只读(&R)",					205
-		MENUITEM	"打印(&P)\tCtrl+P",			206
+		MENUITEM	"只读(&R)",							205
+		MENUITEM	"打印(&P)\tCtrl+P",					206
 		MENUITEM	SEPARATOR
-		MENUITEM	"退出(&X)\tAlt+F4",			299
+		MENUITEM	"退出(&X)\tAlt+F4",					299
 	END
 	POPUP "编辑(&E)"
 	BEGIN
-		MENUITEM	"撤销(&Z)\tCtrl+Z",			210
+		MENUITEM	"撤销(&Z)\tCtrl+Z",					210
 		MENUITEM	SEPARATOR
-		MENUITEM	"剪切(&T)\tCtrl+X",			211
-		MENUITEM	"复制(&C)\tCtrl+C",			212
-		MENUITEM	"粘贴(&P)\tCtrl+V",			213
+		MENUITEM	"剪切(&T)\tCtrl+X",					211
+		MENUITEM	"复制(&C)\tCtrl+C",					212
+		MENUITEM	"粘贴(&P)\tCtrl+V",					213
 		MENUITEM	SEPARATOR
-		MENUITEM	"全选(&A)\tCtrl+A",			214
+		MENUITEM	"全选(&A)\tCtrl+A",					214
 	END
 	POPUP "索引(&I)"
 	BEGIN
-		MENUITEM	"转到(&G)\tCtrl+G",			220
+		MENUITEM	"转到(&G)\tCtrl+G",					220
 		MENUITEM	SEPARATOR
-		MENUITEM	"查找(&S)\tCtrl+F",			221
-		MENUITEM	"查找下一个(&N)\tF3",		222
+		MENUITEM	"查找(&S)\tCtrl+F",					221
+		MENUITEM	"查找下一个(&N)\tF3",				222
 		MENUITEM	SEPARATOR
-		MENUITEM	"替换(&R)\tCtrl+H",			223
+		MENUITEM	"替换(&R)\tCtrl+H",					223
 	END
 	POPUP "工具(&T)"
 	BEGIN
-		MENUITEM	"统计(&C)",					230
+		MENUITEM	"统计(&C)",							230
 		MENUITEM	SEPARATOR
-		MENUITEM	"英文大写(&U)\tCtrl+U",		231
-		MENUITEM	"英文小写(&L)\tCtrl+L",		232
+		MENUITEM	"删除左侧空白(&L)\tCtrl+T",			231
+		MENUITEM	"删除两侧空白(&A)\tCtrl+Alt+T",		232
+		MENUITEM	"删除右侧空白(&R)\tAlt+T",			233
 		MENUITEM	SEPARATOR
-		MENUITEM	"测试(&T)",					239
+		MENUITEM	"英文大写(&P)\tCtrl+U",				234
+		MENUITEM	"英文小写(&W)\tCtrl+L",				235
 	END
 	POPUP "帮助(&H)"
 	BEGIN
-		MENUITEM	"源代码(&G)",				240
+		MENUITEM	"源代码(&G)",						240
 		MENUITEM	SEPARATOR
-		MENUITEM	"关于(&A)\tF1",				249
+		MENUITEM	"关于(&A)\tF1",						249
 	END
 END
 
@@ -94,8 +96,11 @@ BEGIN
 	"F",	321,	VIRTKEY, CONTROL
 	VK_F3,	322,	VIRTKEY
 	"H",	323,	VIRTKEY, CONTROL
-	"U",	331,	VIRTKEY, CONTROL
-	"L",	332,	VIRTKEY, CONTROL
+	"T",	331,	VIRTKEY, CONTROL
+	"T",	332,	VIRTKEY, CONTROL, ALT
+	"T",	333,	VIRTKEY, ALT
+	"U",	334,	VIRTKEY, CONTROL
+	"L",	335,	VIRTKEY, CONTROL
 	VK_F1,	349,	VIRTKEY
 	VK_F4,	399,	VIRTKEY, ALT
 END

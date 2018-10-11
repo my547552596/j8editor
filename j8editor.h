@@ -7,7 +7,7 @@
 #define VI_MAJOR					1
 #define VI_MINOR					0
 #define VI_REVISION					0
-#define VI_BUILD					19
+#define VI_BUILD					20
 #define VI_PROGRAM_NAME_CN			"¿ìÂë¼Ó±à"
 #define VI_PROGRAM_NAME_EN			"j8editor"
 
@@ -22,10 +22,14 @@
 #define	CHAR_USC2LE					2016
 #define	CHAR_UTF8					2008
 #define	CHAR_UTF8BOM				2018
+
 #define	FILE_READ					0
 #define	FILE_WRITE					1
 #define	TEXT_SEARCH					SW_HIDE
 #define	TEXT_REPLACE				SW_SHOW
+#define	TRIM_ALL					0
+#define	TRIM_LEFT					1
+#define	TRIM_RIGHT					2
 #define	WORD_LOWER					0
 #define	WORD_UPPER					1
 
@@ -79,6 +83,7 @@ void toCopyCutPasteSelectallUndo(UINT uMsg);
 int toCountCharacter(char *cString);
 void toGetTextAndLineCount();
 void toShiftSel(BOOL bUL);
+void toTrimString(int iFlag);
 
 LRESULT CALLBACK indexProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 void toCreateDialog(HWND hParent);

@@ -132,14 +132,23 @@ void toClickMenuItem(HWND hWnd, WPARAM wParam) {
         break;
     case 231:
     case 331:
-        toShiftSel(WORD_UPPER);
+        toTrimString(TRIM_LEFT);
         break;
     case 232:
     case 332:
-        toShiftSel(WORD_LOWER);
+        toTrimString(TRIM_ALL);
         break;
-    case 239:
-        toTest();
+    case 233:
+    case 333:
+        toTrimString(TRIM_RIGHT);
+        break;
+    case 234:
+    case 334:
+        toShiftSel(WORD_UPPER);
+        break;
+    case 235:
+    case 335:
+        toShiftSel(WORD_LOWER);
         break;
     case 240:
         Atwo(hWnd, 25, 2);
@@ -154,10 +163,6 @@ void toClickMenuItem(HWND hWnd, WPARAM wParam) {
         PostMessage(hWnd, WM_CLOSE, 0, 0);
         break;
     }
-}
-
-void toTest() {
-    toHelp("", ":)");
 }
 
 void toClickNotifyIconData(HWND hWnd, LPARAM lParam) {
@@ -602,8 +607,29 @@ void toShiftSel(BOOL bUL) {
     SendMessage(hEditor, EM_GETSEL, (WPARAM) &dBegin, (LPARAM) &dEnd);
     TCHAR cStringBuffer[dEnd - dBegin + 1];
     strncpy(cStringBuffer, cEditBuffer + dBegin, dEnd - dBegin);
-    TCHAR *cStringUpper = bUL ? strupr(cStringBuffer) : strlwr(cStringBuffer);
-    SendMessage(hEditor, EM_REPLACESEL, TRUE, (LPARAM) cStringUpper);
+    TCHAR *cTextBuffer = bUL ? strupr(cStringBuffer) : strlwr(cStringBuffer);
+    SendMessage(hEditor, EM_REPLACESEL, TRUE, (LPARAM) cTextBuffer);
+}
+
+void toTrimString(int iFlag) {
+    DWORD dBegin, dEnd = GetWindowTextLength(hEditor) + 1;
+    TCHAR cEditBuffer[dEnd];
+    GetWindowText(hEditor, cEditBuffer, sizeof(cEditBuffer) / sizeof(TCHAR));
+    SendMessage(hEditor, EM_GETSEL, (WPARAM) &dBegin, (LPARAM) &dEnd);
+    TCHAR cTextBuffer[dEnd - dBegin + 1];
+    strncpy(cTextBuffer, cEditBuffer + dBegin, dEnd - dBegin);
+
+    switch(iFlag) {
+    case TRIM_ALL:
+        SendMessage(hEditor, EM_REPLACESEL, TRUE, (LPARAM) toTrimAll(cTextBuffer));
+        break;
+    case TRIM_LEFT:
+        SendMessage(hEditor, EM_REPLACESEL, TRUE, (LPARAM) toTrimLeft(cTextBuffer));
+        break;
+    case TRIM_RIGHT:
+        SendMessage(hEditor, EM_REPLACESEL, TRUE, (LPARAM) toTrimRight(cTextBuffer));
+        break;
+    }
 }
 
 void toWriteFile() {

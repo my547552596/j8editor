@@ -7,7 +7,7 @@
 #define VI_MAJOR					1
 #define VI_MINOR					0
 #define VI_REVISION					0
-#define VI_BUILD					16
+#define VI_BUILD					18
 #define VI_PROGRAM_NAME_CN			"快码加编"
 #define VI_PROGRAM_NAME_EN			"j8editor"
 
@@ -17,6 +17,11 @@
 #define IDS_ABOUT_TITLE				"关于"
 #define IDS_ABOUT_TEXT				1976
 
+#define	CHAR_ANSI					2001
+#define	CHAR_USC2BE					2116
+#define	CHAR_USC2LE					2016
+#define	CHAR_UTF8					2008
+#define	CHAR_UTF8BOM				2018
 #define	FILE_READ					0
 #define	FILE_WRITE					1
 #define	TEXT_SEARCH					SW_HIDE
@@ -53,9 +58,14 @@ void toSetFrameTitle();
 void toSetNotifyIconData();
 
 /* File */
-BOOL toConfirmFileExist(char *cPath);
+BOOL toBeFileExist(char *cPath);
+void toConvertAnsiFromUnicodeBe(wchar_t *wcUnicode, char *cAnsi);
+void toConvertAnsiFromUnicodeLe(wchar_t *wcUnicode, BOOL bFinish);
+void toConvertAnsiFromUtf8(char *cUtf8);
+int toConvertUtf8FromAnsi(char *cAnsi, char *cUtf8);
 void toCreateFile();
 void toDropFiles(HWND hWnd, HDROP hDropInfo);
+DWORD toGetCharacterCode(char *cAuu);
 void toGetFileReadonly();
 void toOpenOrSaveAsFile(BOOL bOS);
 void toPrintFile();

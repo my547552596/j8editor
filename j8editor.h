@@ -7,15 +7,16 @@
 #define VI_MAJOR					1
 #define VI_MINOR					0
 #define VI_REVISION					0
-#define VI_BUILD					20
+#define VI_BUILD					21
 #define VI_PROGRAM_NAME_CN			"快码加编"
 #define VI_PROGRAM_NAME_EN			"j8editor"
 
 #define	IDI_MAINFRAME				128
+#define IDS_ABOUT					999
+#define IDS_DEFAULT_TITLE			"提示"
 #define	IDS_FILE_FILTER				1001
 #define	IDS_FILE_NEW				1002
-#define IDS_ABOUT_TITLE				"关于"
-#define IDS_ABOUT_TEXT				1976
+#define	IDS_INDEX					1101
 
 #define	CHAR_ANSI					2001
 #define	CHAR_USC2BE					2116
@@ -25,8 +26,9 @@
 
 #define	FILE_READ					0
 #define	FILE_WRITE					1
-#define	TEXT_SEARCH					SW_HIDE
-#define	TEXT_REPLACE				SW_SHOW
+#define	EDIT_GOTO					-1
+#define	EDIT_REPLACE				SW_SHOW
+#define	EDIT_SEARCH					SW_HIDE
 #define	TRIM_ALL					0
 #define	TRIM_LEFT					1
 #define	TRIM_RIGHT					2
@@ -37,7 +39,7 @@
 #define WM_TASKBAR_CREATED			RegisterWindowMessage(TEXT("TaskbarCreated"))
 
 HICON hIcon;
-HWND hDialogGoto, hDialogSearch, hEditor, hFrame;
+HWND hDialog, hEditor, hFrame;
 NOTIFYICONDATA nid;
 static const TCHAR cFrameName[9] = VI_PROGRAM_NAME_EN;
 static TCHAR cFilePath[MAX_PATH], cLoadString[MAX_PATH], cSearchString[50], cReplaceString[50];
@@ -64,7 +66,7 @@ void toSetNotifyIconData();
 /* File */
 BOOL toBeFileExist(char *cPath);
 void toConvertAnsiFromUnicodeBe(wchar_t *wcUnicode, char *cAnsi);
-void toConvertAnsiFromUnicodeLe(wchar_t *wcUnicode, BOOL bFinish);
+void toConvertAnsiFromUnicodeLe(wchar_t *wcUnicode);
 void toConvertAnsiFromUtf8(char *cUtf8);
 int toConvertUtf8FromAnsi(char *cAnsi, char *cUtf8);
 void toCreateFile();
@@ -87,9 +89,8 @@ void toTrimString(int iFlag);
 
 LRESULT CALLBACK indexProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 void toCreateDialog(HWND hParent);
+BOOL toDoIndex(HWND hWnd, WORD wId);
 void toGetLine(int iNumber);
 void toReplaceText();
-BOOL toSearchOrCancel(HWND hWnd, WORD wId);
 int toSearchText();
-void toShowDialogGoto();
-void toShowDialogSearch(int iSOR);
+void toShowDialog(int iGSR);

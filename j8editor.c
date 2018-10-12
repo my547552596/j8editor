@@ -403,7 +403,9 @@ void toHelp(TCHAR *cTitle, TCHAR *cText) {
 	if(strlen(cTitle)) {
 		MessageBox(NULL, cText, cTitle, MB_OK);
 	} else {
-		MessageBox(NULL, cText, IDS_DEFAULT_TITLE, MB_OK);
+		TCHAR cDefaultTitle[5];
+		LoadString(GetModuleHandle(NULL), IDS_DEFAULT_TITLE, cDefaultTitle, 5);
+		MessageBox(NULL, cText, cDefaultTitle, MB_OK);
 	}
 }
 
@@ -489,10 +491,11 @@ void toReadFile() {
 
 	DWORD dReadSize = GetFileSize(hFile, NULL);
 	TCHAR cFileBuffer[dReadSize];
+	wchar_t wcBuffer[dReadSize / 2];
 
 	if(dReadSize > 0) {
 		ReadFile(hFile, cFileBuffer, sizeof(cFileBuffer), &dReadSize, NULL);
-		wchar_t wcBuffer[dReadSize / 2];
+		wcBuffer[dReadSize / 2] = cFileBuffer[dReadSize] = '\0';
 		switch(toGetCharacterCode(cFileBuffer)) {
 		case CHAR_ANSI:
 			SetWindowText(hEditor, cFileBuffer);
@@ -571,7 +574,7 @@ void toSetFrameTitle() {
 	TCHAR cFrameTitle[MAX_PATH];
 	strcpy(cFrameTitle, cFilePath);
 	strcat(cFrameTitle, " - ");
-	strcat(cFrameTitle, VI_PROGRAM_NAME_CN);
+	strcat(cFrameTitle, toLoadString(IDS_PROGRAM_NAME));
 	SetWindowText(hFrame, cFrameTitle);
 }
 
@@ -679,10 +682,10 @@ BOOL toDoIndex(HWND hWnd, WORD wId) {
 	case 402:
 		GetDlgItemText(hWnd, 401, cSearchString, sizeof(cSearchString));
 		GetDlgItemText(hWnd, 402, cBuffer16, sizeof(cBuffer16));
-		if(strcmp(cBuffer16, toLoadString(IDS_INDEX)) == 0) {
-			toGetLine(atoi(cSearchString) - 1);
-		} else {
+		if(strcmp(cBuffer16, toLoadString(IDS_INDEX))) {
 			toSearchText();
+		} else {
+			toGetLine(atoi(cSearchString) - 1);
 		}
 		SendMessage(hDialog, WM_COMMAND, IDCANCEL, 0);
 		break;
@@ -740,7 +743,7 @@ int toSearchText() {
 	return iBegin;
 }
 
-void toShowDialog(int iGSR) {
+void toShowDialog(int iGRS) {
 	int iDialogHeight, iDialogWidth, iParentHeight, iParentWidth;
 	long l401OldStyle = GetWindowLong(GetDlgItem(hDialog, 401), GWL_STYLE);
 	RECT rect;
@@ -758,7 +761,7 @@ void toShowDialog(int iGSR) {
 
 	GetClientRect(hDialog, &rect);
 	iDialogHeight -= rect.bottom - rect.top;
-	iDialogHeight += iGSR > 0 ? 75 : 40;
+	iDialogHeight += iGRS ? 40 : 75;
 
 	MoveWindow(hDialog,
 	           pScreen.x + (iParentWidth - iDialogWidth) / 2,
@@ -769,7 +772,7 @@ void toShowDialog(int iGSR) {
 	          );
 
 
-	if(iGSR < 0) {
+	if(iGRS < 0) {
 		SetWindowLong(GetDlgItem(hDialog, 401), GWL_STYLE, l401OldStyle | ES_NUMBER);
 		SetWindowText(GetDlgItem(hDialog, 401), "");
 		SetWindowText(GetDlgItem(hDialog, 402), toLoadString(IDS_INDEX));
@@ -777,8 +780,8 @@ void toShowDialog(int iGSR) {
 		SetWindowLong(GetDlgItem(hDialog, 401), GWL_STYLE, l401OldStyle & ~ES_NUMBER);
 		SetWindowText(GetDlgItem(hDialog, 402), toLoadString(IDS_INDEX) + 9);
 	}
-
-	ShowWindow(GetDlgItem(hDialog, 403), iGSR);
-	ShowWindow(GetDlgItem(hDialog, 404), iGSR);
+	
+	EnableWindow(GetDlgItem(hDialog, 403), ~iGRS);
+	EnableWindow(GetDlgItem(hDialog, 404), ~iGRS);
 	ShowWindow(hDialog, SW_SHOW);
 }

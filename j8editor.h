@@ -7,16 +7,15 @@
 #define VI_MAJOR					1
 #define VI_MINOR					0
 #define VI_REVISION					0
-#define VI_BUILD					21
-#define VI_PROGRAM_NAME_CN			"快码加编"
-#define VI_PROGRAM_NAME_EN			"j8editor"
+#define VI_BUILD					22
 
 #define	IDI_MAINFRAME				128
 #define IDS_ABOUT					999
-#define IDS_DEFAULT_TITLE			"提示"
+#define IDS_DEFAULT_TITLE			1000
 #define	IDS_FILE_FILTER				1001
 #define	IDS_FILE_NEW				1002
 #define	IDS_INDEX					1101
+#define	IDS_PROGRAM_NAME			1999
 
 #define	CHAR_ANSI					2001
 #define	CHAR_USC2BE					2116
@@ -27,8 +26,8 @@
 #define	FILE_READ					0
 #define	FILE_WRITE					1
 #define	EDIT_GOTO					-1
-#define	EDIT_REPLACE				SW_SHOW
-#define	EDIT_SEARCH					SW_HIDE
+#define	EDIT_REPLACE				0
+#define	EDIT_SEARCH					1
 #define	TRIM_ALL					0
 #define	TRIM_LEFT					1
 #define	TRIM_RIGHT					2
@@ -41,7 +40,7 @@
 HICON hIcon;
 HWND hDialog, hEditor, hFrame;
 NOTIFYICONDATA nid;
-static const TCHAR cFrameName[9] = VI_PROGRAM_NAME_EN;
+static const TCHAR cFrameName[9] = "j8editor\0";
 static TCHAR cFilePath[MAX_PATH], cLoadString[MAX_PATH], cSearchString[50], cReplaceString[50];
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
@@ -93,4 +92,4 @@ BOOL toDoIndex(HWND hWnd, WORD wId);
 void toGetLine(int iNumber);
 void toReplaceText();
 int toSearchText();
-void toShowDialog(int iGSR);
+void toShowDialog(int iGRS);

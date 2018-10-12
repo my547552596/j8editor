@@ -10,13 +10,13 @@ BEGIN
 		BEGIN
 			VALUE	"Comments",			"MinGW compilation\0"
 			VALUE	"CompanyName",		"mayer\0"
-			VALUE	"FileDescription",	VI_PROGRAM_NAME_EN
+			VALUE	"FileDescription",	"j8editor\0"
 			VALUE	"FileVersion",		VERSION_INFO
 			VALUE	"LegalCopyright",	"mayer@2018.9.30\0"
-			VALUE	"LegalTrademarks",	"chi"
-			VALUE	"InternalName",		VI_PROGRAM_NAME_EN
+			VALUE	"LegalTrademarks",	"chi\0"
+			VALUE	"InternalName",		"j8editor\0"
 			VALUE	"OriginalFilename",	"j8editor.exe\0"
-			VALUE	"ProductName",		VI_PROGRAM_NAME_CN
+			VALUE	"ProductName",		"快码加编\0"
 			VALUE	"ProductVersion",	VERSION_INFO
 		END
 	END
@@ -119,7 +119,9 @@ END
 STRINGTABLE DISCARDABLE
 BEGIN
 	IDS_ABOUT			"关于\0造吧作品，C语言 MinGW64 编译的纯文本编辑器。\0"
+	IDS_DEFAULT_TITLE	"提示\0"
     IDS_FILE_FILTER		"文本文件 (*.txt)\0*.txt\0所有文件 (*.*)\0*.*\0"
     IDS_FILE_NEW		"未命名文件\0"
 	IDS_INDEX			"转到(&G)\0查找(&F)\0"
+	IDS_PROGRAM_NAME	"快码加编 v1.0 alpha\0"
 END

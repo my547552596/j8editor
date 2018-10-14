@@ -66,6 +66,21 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 	return 0;
 }
 
+BOOL toBeFileExist(char *cPath) {
+	DWORD dAttr = GetFileAttributes(cPath);
+
+	if(dAttr == INVALID_FILE_ATTRIBUTES) {
+		return FALSE;
+	}
+
+	if(dAttr & FILE_ATTRIBUTE_DIRECTORY) {
+		return FALSE;
+	}
+
+	strcpy(cFilePath, cPath);
+	return TRUE;
+}
+
 void toClickMenuItem(HWND hWnd, WPARAM wParam) {
 	switch(LOWORD(wParam)) {
 	case 201:
@@ -181,25 +196,6 @@ void toClickNotifyIconData(HWND hWnd, LPARAM lParam) {
 	}
 }
 
-void toCopyCutPasteSelectallUndo(UINT uMsg) {
-	SendMessage(hEditor, uMsg, 0, -1);
-}
-
-BOOL toBeFileExist(char *cPath) {
-	DWORD dAttr = GetFileAttributes(cPath);
-
-	if(dAttr == INVALID_FILE_ATTRIBUTES) {
-		return FALSE;
-	}
-
-	if(dAttr & FILE_ATTRIBUTE_DIRECTORY) {
-		return FALSE;
-	}
-
-	strcpy(cFilePath, cPath);
-	return TRUE;
-}
-
 void toConvertAnsiFromUnicodeBe(wchar_t *wcUnicode, char *cAnsi) {
 	for(int i = 0; i < wcslen(wcUnicode) + 1; i++) {
 		wcUnicode[i] = (unsigned char)cAnsi[(i + 1) * 2] * 256 + (unsigned char)cAnsi[(i + 1) * 2 + 1];
@@ -238,6 +234,10 @@ int toConvertUtf8FromAnsi(char *cAnsi, char *cUtf8) {
 	}
 
 	return iLength;
+}
+
+void toCopyCutPasteSelectallUndo(UINT uMsg) {
+	SendMessage(hEditor, uMsg, 0, -1);
 }
 
 int toCountCharacter(char *cString) {

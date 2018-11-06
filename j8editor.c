@@ -167,7 +167,7 @@ void toClickMenuItem(HWND hWnd, WPARAM wParam) {
         break;
     case 240:
         xSeal(hWnd, 25, 2);
-        ShellExecute(hFrame, "open", "https://gitlab.com/my547552596/j8editor", NULL, NULL, SW_SHOWNORMAL);
+        ShellExecute(hFrame, "open", "https://github.com/my547552596/j8editor", NULL, NULL, SW_SHOWNORMAL);
         break;
     case 249:
     case 349:

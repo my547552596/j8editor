@@ -1,4 +1,4 @@
-#include "Atwo.h"
+#include "../bo/xSeal_c.h"
 #include "jet.h"
 
 #define MAKE_STRING(N)				#N
@@ -6,7 +6,7 @@
 #define VERSION_INFO				MAKE_VERSION(VI_MAJOR, VI_MINOR, VI_REVISION, VI_BUILD)
 #define VI_MAJOR					1
 #define VI_MINOR					0
-#define VI_REVISION					0
+#define VI_REVISION					1
 #define VI_BUILD					22
 
 #define	IDI_MAINFRAME				128

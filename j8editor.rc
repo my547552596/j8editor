@@ -9,11 +9,11 @@ BEGIN
 		BLOCK "080404b0"
 		BEGIN
 			VALUE	"Comments",			"MinGW compilation\0"
-			VALUE	"CompanyName",		"mayer\0"
+			VALUE	"CompanyName",		"mayao\0"
 			VALUE	"FileDescription",	"j8editor\0"
 			VALUE	"FileVersion",		VERSION_INFO
-			VALUE	"LegalCopyright",	"mayer@2018.9.30\0"
-			VALUE	"LegalTrademarks",	"chi\0"
+			VALUE	"LegalCopyright",	"m@yiyi 2018.9.30\0"
+			VALUE	"LegalTrademarks",	"bo\0"
 			VALUE	"InternalName",		"j8editor\0"
 			VALUE	"OriginalFilename",	"j8editor.exe\0"
 			VALUE	"ProductName",		"快码加编\0"
@@ -26,7 +26,7 @@ BEGIN
 	END
 END
 
-IDI_MAINFRAME ICON "../chi/jobar.ico"
+IDI_MAINFRAME ICON "../bo/jobar.ico"
 
 200 MENU
 BEGIN
@@ -123,5 +123,5 @@ BEGIN
     IDS_FILE_FILTER		"文本文件 (*.txt)\0*.txt\0所有文件 (*.*)\0*.*\0"
     IDS_FILE_NEW		"未命名文件\0"
 	IDS_INDEX			"转到(&G)\0查找(&F)\0"
-	IDS_PROGRAM_NAME	"快码加编 v1.0 alpha\0"
+	IDS_PROGRAM_NAME	"快码加编 v1.0 beta\0"
 END

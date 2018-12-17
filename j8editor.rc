@@ -1,127 +1,127 @@
 #include "j8editor.h"
 
 1 VERSIONINFO
-FILEVERSION		VI_MAJOR,VI_MINOR,VI_REVISION,VI_BUILD
-PRODUCTVERSION	VI_MAJOR,VI_MINOR,VI_REVISION,VI_BUILD
+FILEVERSION     VI_MAJOR,VI_MINOR,VI_REVISION,VI_BUILD
+PRODUCTVERSION  VI_MAJOR,VI_MINOR,VI_REVISION,VI_BUILD
 BEGIN
-	BLOCK "StringFileInfo"
-	BEGIN
-		BLOCK "080404b0"
-		BEGIN
-			VALUE	"Comments",			"MinGW compilation\0"
-			VALUE	"CompanyName",		"mayao\0"
-			VALUE	"FileDescription",	"j8editor\0"
-			VALUE	"FileVersion",		VERSION_INFO
-			VALUE	"LegalCopyright",	"m@yiyi 2018.9.30\0"
-			VALUE	"LegalTrademarks",	"bo\0"
-			VALUE	"InternalName",		"j8editor\0"
-			VALUE	"OriginalFilename",	"j8editor.exe\0"
-			VALUE	"ProductName",		"快码加编\0"
-			VALUE	"ProductVersion",	VERSION_INFO
-		END
-	END
-	BLOCK "VarFileInfo"
-	BEGIN
-		VALUE "Translation", 0x804, 0x4b0
-	END
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "080404b0"
+    BEGIN
+      VALUE "Comments",         "MinGW compilation\0"
+      VALUE "CompanyName",      "mayao\0"
+      VALUE "FileDescription",  "j8editor\0"
+      VALUE "FileVersion",      VERSION_INFO
+      VALUE "LegalCopyright",   "m@yiyi 2018.9.30\0"
+      VALUE "LegalTrademarks",  "bo\0"
+      VALUE "InternalName",     "j8editor\0"
+      VALUE "OriginalFilename", "j8editor.exe\0"
+      VALUE "ProductName",      "快码加编\0"
+      VALUE "ProductVersion",   VERSION_INFO
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x804, 0x4b0
+  END
 END
 
 IDI_MAINFRAME ICON "../bo/jobar.ico"
 
 200 MENU
 BEGIN
-	POPUP "文件(&F)"
-	BEGIN
-		MENUITEM	"新建(&N)\tCtrl+N",					201
-		MENUITEM	"打开(&O)\tCtrl+O",					202
-		MENUITEM	"保存(&S)\tCtrl+S",					203
-		MENUITEM	"另存为(&A)\tCtrl+Alt+S",			204
-		MENUITEM	SEPARATOR
-		MENUITEM	"只读(&R)",							205
-		MENUITEM	"打印(&P)\tCtrl+P",					206
-		MENUITEM	SEPARATOR
-		MENUITEM	"退出(&X)\tAlt+F4",					299
-	END
-	POPUP "编辑(&E)"
-	BEGIN
-		MENUITEM	"撤销(&Z)\tCtrl+Z",					210
-		MENUITEM	SEPARATOR
-		MENUITEM	"剪切(&T)\tCtrl+X",					211
-		MENUITEM	"复制(&C)\tCtrl+C",					212
-		MENUITEM	"粘贴(&P)\tCtrl+V",					213
-		MENUITEM	SEPARATOR
-		MENUITEM	"全选(&A)\tCtrl+A",					214
-	END
-	POPUP "索引(&I)"
-	BEGIN
-		MENUITEM	"转到(&G)\tCtrl+G",					220
-		MENUITEM	SEPARATOR
-		MENUITEM	"查找(&S)\tCtrl+F",					221
-		MENUITEM	"查找下一个(&N)\tF3",				222
-		MENUITEM	SEPARATOR
-		MENUITEM	"替换(&R)\tCtrl+H",					223
-	END
-	POPUP "工具(&T)"
-	BEGIN
-		MENUITEM	"统计(&C)",							230
-		MENUITEM	SEPARATOR
-		MENUITEM	"删除左侧空白(&L)\tCtrl+T",			231
-		MENUITEM	"删除两侧空白(&A)\tCtrl+Alt+T",		232
-		MENUITEM	"删除右侧空白(&R)\tAlt+T",			233
-		MENUITEM	SEPARATOR
-		MENUITEM	"英文大写(&P)\tCtrl+U",				234
-		MENUITEM	"英文小写(&W)\tCtrl+L",				235
-	END
-	POPUP "帮助(&H)"
-	BEGIN
-		MENUITEM	"源代码(&G)",						240
-		MENUITEM	SEPARATOR
-		MENUITEM	"关于(&A)\tF1",						249
-	END
+  POPUP "文件(&F)"
+  BEGIN
+    MENUITEM  "新建(&N)\tCtrl+N",             201
+    MENUITEM  "打开(&O)\tCtrl+O",             202
+    MENUITEM  "保存(&S)\tCtrl+S",             203
+    MENUITEM  "另存为(&A)\tCtrl+Alt+S",       204
+    MENUITEM  SEPARATOR
+    MENUITEM  "只读(&R)",                     205
+    MENUITEM  "打印(&P)\tCtrl+P",             206
+    MENUITEM  SEPARATOR
+    MENUITEM  "退出(&X)\tAlt+F4",             299
+  END
+  POPUP "编辑(&E)"
+  BEGIN
+    MENUITEM  "撤销(&Z)\tCtrl+Z",             210
+    MENUITEM  SEPARATOR
+    MENUITEM  "剪切(&T)\tCtrl+X",             211
+    MENUITEM  "复制(&C)\tCtrl+C",             212
+    MENUITEM  "粘贴(&P)\tCtrl+V",             213
+    MENUITEM  SEPARATOR
+    MENUITEM  "全选(&A)\tCtrl+A",             214
+  END
+  POPUP "索引(&I)"
+  BEGIN
+    MENUITEM  "转到(&G)\tCtrl+G",             220
+    MENUITEM  SEPARATOR
+    MENUITEM  "查找(&S)\tCtrl+F",             221
+    MENUITEM  "查找下一个(&N)\tF3",           222
+    MENUITEM  SEPARATOR
+    MENUITEM  "替换(&R)\tCtrl+H",             223
+  END
+  POPUP "工具(&T)"
+  BEGIN
+    MENUITEM  "统计(&C)",                     230
+    MENUITEM  SEPARATOR
+    MENUITEM  "删除左侧空白(&L)\tCtrl+T",     231
+    MENUITEM  "删除两侧空白(&A)\tCtrl+Alt+T", 232
+    MENUITEM  "删除右侧空白(&R)\tAlt+T",      233
+    MENUITEM  SEPARATOR
+    MENUITEM  "英文大写(&P)\tCtrl+U",         234
+    MENUITEM  "英文小写(&W)\tCtrl+L",         235
+  END
+  POPUP "帮助(&H)"
+  BEGIN
+    MENUITEM  "源代码(&G)",                   240
+    MENUITEM  SEPARATOR
+    MENUITEM  "关于(&A)\tF1",                 249
+  END
 END
 
 300 ACCELERATORS
 BEGIN
-	"N",	301,	VIRTKEY, CONTROL
-	"O",	302,	VIRTKEY, CONTROL
-	"S",	303,	VIRTKEY, CONTROL
-	"S",	304,	VIRTKEY, CONTROL, ALT
-	"P",	306,	VIRTKEY, CONTROL
-	"Z",	310,	VIRTKEY, CONTROL
-	"X",	311,	VIRTKEY, CONTROL
-	"C",	312,	VIRTKEY, CONTROL
-	"V",	313,	VIRTKEY, CONTROL
-	"A",	314,	VIRTKEY, CONTROL
-	"G",	320,	VIRTKEY, CONTROL
-	"F",	321,	VIRTKEY, CONTROL
-	VK_F3,	322,	VIRTKEY
-	"H",	323,	VIRTKEY, CONTROL
-	"T",	331,	VIRTKEY, CONTROL
-	"T",	332,	VIRTKEY, CONTROL, ALT
-	"T",	333,	VIRTKEY, ALT
-	"U",	334,	VIRTKEY, CONTROL
-	"L",	335,	VIRTKEY, CONTROL
-	VK_F1,	349,	VIRTKEY
-	VK_F4,	399,	VIRTKEY, ALT
+  "N",   301,  VIRTKEY, CONTROL
+  "O",   302,  VIRTKEY, CONTROL
+  "S",   303,  VIRTKEY, CONTROL
+  "S",   304,  VIRTKEY, CONTROL, ALT
+  "P",   306,  VIRTKEY, CONTROL
+  "Z",   310,  VIRTKEY, CONTROL
+  "X",   311,  VIRTKEY, CONTROL
+  "C",   312,  VIRTKEY, CONTROL
+  "V",   313,  VIRTKEY, CONTROL
+  "A",   314,  VIRTKEY, CONTROL
+  "G",   320,  VIRTKEY, CONTROL
+  "F",   321,  VIRTKEY, CONTROL
+  VK_F3, 322,  VIRTKEY
+  "H",   323,  VIRTKEY, CONTROL
+  "T",   331,  VIRTKEY, CONTROL
+  "T",   332,  VIRTKEY, CONTROL, ALT
+  "T",   333,  VIRTKEY, ALT
+  "U",   334,  VIRTKEY, CONTROL
+  "L",   335,  VIRTKEY, CONTROL
+  VK_F1, 349,  VIRTKEY
+  VK_F4, 399,  VIRTKEY, ALT
 END
 
 400 DIALOG DISCARDABLE 0, 0, 165, 39
 STYLE DS_MODALFRAME | WS_CAPTION | WS_POPUP | WS_SYSMENU
-CAPTION	"检索"
+CAPTION "检索"
 FONT 9, "Courier New"
 BEGIN
-    EDITTEXT					401,	5,		6,		100,	10,		ES_AUTOHSCROLL | ES_NUMBER
-	PUSHBUTTON	"\0", 			402,	110,	5,		50,		12
-    EDITTEXT					403,	5,		23,		100,	10,		ES_AUTOHSCROLL
-    PUSHBUTTON	"替换(&H)\0",	404,	110,	22,		50,		12
+    EDITTEXT                  401,  5,    6,    100,  10,   ES_AUTOHSCROLL | ES_NUMBER
+  PUSHBUTTON  "\0",           402,  110,  5,    50,   12
+    EDITTEXT                  403,  5,    23,   100,  10,   ES_AUTOHSCROLL
+    PUSHBUTTON  "替换(&H)\0", 404,  110,  22,   50,   12
 END
 
 STRINGTABLE DISCARDABLE
 BEGIN
-	IDS_ABOUT			"关于\0造吧作品，C语言 MinGW64 编译的纯文本编辑器。\0"
-	IDS_DEFAULT_TITLE	"提示\0"
-    IDS_FILE_FILTER		"文本文件 (*.txt)\0*.txt\0所有文件 (*.*)\0*.*\0"
-    IDS_FILE_NEW		"未命名文件\0"
-	IDS_INDEX			"转到(&G)\0查找(&F)\0"
-	IDS_PROGRAM_NAME	"快码加编 v1.0 beta\0"
+  IDS_ABOUT         "关于\0造吧作品，C语言 MinGW64 编译的纯文本编辑器。\0"
+  IDS_DEFAULT_TITLE "提示\0"
+    IDS_FILE_FILTER "文本文件 (*.txt)\0*.txt\0所有文件 (*.*)\0*.*\0"
+    IDS_FILE_NEW    "未命名文件\0"
+  IDS_INDEX         "转到(&G)\0查找(&F)\0"
+  IDS_PROGRAM_NAME  "快码加编 v1.0\0"
 END

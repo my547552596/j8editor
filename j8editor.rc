@@ -9,11 +9,11 @@ BEGIN
     BLOCK "080404b0"
     BEGIN
       VALUE "Comments",         "MinGW compilation\0"
-      VALUE "CompanyName",      "mayao\0"
+      VALUE "CompanyName",      "yiyi\0"
       VALUE "FileDescription",  "j8editor\0"
       VALUE "FileVersion",      VERSION_INFO
-      VALUE "LegalCopyright",   "m@yiyi 2018.9.30\0"
-      VALUE "LegalTrademarks",  "bo\0"
+      VALUE "LegalCopyright",   "m@20190301.yiyi\0"
+      VALUE "LegalTrademarks",  "jobar\0"
       VALUE "InternalName",     "j8editor\0"
       VALUE "OriginalFilename", "j8editor.exe\0"
       VALUE "ProductName",      "¿ìÂë¼Ó±à\0"

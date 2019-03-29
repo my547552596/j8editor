@@ -7,7 +7,7 @@
 #define VI_MAJOR				        	1
 #define VI_MINOR				        	0
 #define VI_REVISION			      		1
-#define VI_BUILD				        	23
+#define VI_BUILD				        	24
 
 #define	IDI_MAINFRAME		      		128
 #define IDS_ABOUT				         	999
